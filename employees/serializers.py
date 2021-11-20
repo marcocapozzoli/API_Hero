@@ -15,3 +15,21 @@ class CompaniesEmployeeSerializer(serializers.ModelSerializer):
                   'cnpj',
                   'address'
         ]
+
+class ListEmployeeSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source='user.username', read_only=True)
+    fullname = serializers.CharField(source='user.get_full_name', read_only=True)
+    companies = CompaniesEmployeeSerializer(
+        source='company_set',
+        many=True,
+        read_only=True
+    )
+    class Meta:
+        model = Employee
+        fields = [
+            'id',
+            'username',
+            'fullname',
+            'cpf',
+            'companies'
+        ]
