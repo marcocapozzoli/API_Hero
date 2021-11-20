@@ -1,0 +1,38 @@
+version: "3.8"
+   
+services:
+  database:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "27018:27018"
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@pgadmin.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin
+    ports:
+      - "5050:80"
+    restart: always
+    volumes:
+      - pgadmin:/root/.pgadmin
+    
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      - database
+
+volumes:
+  postgres_data:
+  pgadmin:
