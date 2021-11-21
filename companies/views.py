@@ -21,3 +21,19 @@ class DetailCompanyAPIView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = ListCompanySerializer(instance)
         return Response(serializer.data)
+
+    def update(self, request, **kwargs):
+        instance = self.get_object()
+        serializer = CreateCompanySerializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
+        content = {'Message': 'Empresa ' + f'"{instance}"' + ' excluída com sucesso.'}
+        return Response(
+            data=content,
+            status=status.HTTP_204_NO_CONTENT
+        )
