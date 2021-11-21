@@ -1,5 +1,5 @@
-from validate_docbr import CNPJ
+from validate_docbr import CPF
 
-def validate_cnpj(value):
-    cnpj = CNPJ()
-    return cnpj.validate(value)
+def validate_cpf(value):
+    cpf = CPF()
+    return cpf.validate(value)
