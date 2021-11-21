@@ -15,4 +15,20 @@ class EmployeesCompanySerializer(serializers.ModelSerializer):
             'username',
             'fullname',
             'cpf'
-        ] 
+        ]
+        
+class ListCompanySerializer(serializers.ModelSerializer):
+    employees = EmployeesCompanySerializer(
+        many=True,
+        read_only=True
+    )
+    class Meta:
+        model = Company
+        fields = [
+            'id',
+            'company_name',
+            'trade_name',
+            'cnpj',
+            'address',
+            'employees'
+        ]
