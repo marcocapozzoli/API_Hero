@@ -15,3 +15,12 @@ class ListEmployeeAPIView(generics.ListCreateAPIView):
             return ListEmployeeSerializer
         elif self.request.method == 'POST':
             return CreateEmployeeSerializer
+
+class DetailEmployeeAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Employee.objects.all()
+    serializer_class = ListEmployeeSerializer    
+    
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = ListEmployeeSerializer(instance)
+        return Response(serializer.data)
