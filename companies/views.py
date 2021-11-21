@@ -12,3 +12,12 @@ class ListCompanyAPIView(generics.ListCreateAPIView):
             return ListCompanySerializer
         elif self.request.method == 'POST':
             return CreateCompanySerializer
+        
+class DetailCompanyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Company.objects.all()
+    serializer_class = ListCompanySerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = ListCompanySerializer(instance)
+        return Response(serializer.data)
