@@ -2,13 +2,11 @@
 
 ## 💻 Project
 
-This project is a simple API for register a task.
-- It has a token authentication system.
-- Only authenticated users can use the API.
-- The user must be able to register new tasks, and edit or delete only their own.
-- It has a registration screen (optional, if you don't want to use the admin or shell to create a user)
+This project is a simple API for registration and control of companies and their employees.
+  - Employees are also system users and can belong to more than one company.
 
 Below Screenshot from the browsable API:
+
 ![image](/readme_img/main_screen.png?raw=true "Main_Screen")
 
 ## 🚀 Technologies
@@ -17,69 +15,62 @@ This project was developed with the following tecnologies:
 - Python 3.10
 - Django 3.2.9
 - Django Rest Framework 3.12.4
+- Docker
 
-The reason for choosing Django and Django Rest Framework was the practicality and productivity for the creation of REST API's, besides particularly liking these tools. 🥰
+The database used for this application was `postgreSQL`.
 
-The database used for this application was `sqlite3`. Because it is already installed and configured with Django, it makes development a lot easier.
+## ℹ️ Run the project
 
-## ℹ️ Run the project**
-
-- In the terminal, run
+- (Local) In the terminal, run:
 ```
 git clone https://github.com/marcocapozzoli/API_Hero.git
 docker-compose up --build
-```
-
-- to run the tests:
-```
-docker-compose exec web pytest
-
-# ohter options:
-docker-compose exec web pytest -x --cov
 ```
 
 - Don't forget to run migrations:
 ```
 docker-compose exec web python manage.py migrate
 ```
+- This project was hosted on a heroku server: `https://drf-hero-api.herokuapp.com/v1/`. If you don't want to clone and run locally, you can test it online.
 
-**3. In operation**
-  
-Example of creating a task (with Postman):
-  
-![image](/readme_img/postman_post_api-todolist.png?raw=true "postman_post_api-todolist")
+## Tests
 
-Update a task (with browsable API)
-![image](/readme_img/drf_put_api_todolist_id.png?raw=true "drf_put_api-todolist_id")
-
-If the user tries to update or delete a task that he did not create himself, it will not succeed and will display an error message.
-![image](/readme_img/drf_put_api_todolist_id_response_error.png?raw=true "drf_put_api-todolist_response_error_id")
-![image](/readme_img/drf_delete_api_todolist_id_response_error.png?raw=true "drf_delete_api-todolist_response_error_id")
-
-The API has ordering by delivery date and searching by username. To access this resource, pass this information by parameter.
+- to run the tests:
 ```
-/api/todolist/?ordering=date&search=marco
+docker-compose exec web pytest
+
+# other options:
+docker-compose exec web pytest -x --cov
 ```
+- The tests were divided into three files, models, serializers and views. Where the main purpose was to check requests for endpoints
+
+- Test coverage:
+
+![image](/readme_img/test_coverage.png?raw=true "Test_coverage")
 
 ## Endpoints and Features
 
-- Register:
-  - `(POST)/signup`
-- Get token for API access
-  - `(POST)/api/token`
-- List all task
-  - `(GET) /api/todolist/`
-- Create new task
-  - `(POST) /api/todolist/`
-- Show an specific task
-  - `(GET) /api/todolist/{id}/`
-- Update a specific task
-  - `(PUT) /api/todolist/{id}/`
-  - `(PATCH) /api/todolist/{id}/`
-- Delete an specific task
-  - `(DELETE) /api/todolist/{id}/`
+- List all companies or employees
+  - `(GET) /v1/companies/`
+  - `(GET) /v1/employees/`
+- Create a company or employee:
+  - `(POST)/v1/companies/`
+  - `(POST)/v1/employees/`
+- Show a specific company or employee
+  - `(GET) /api/companies/{id}/`
+  - `(GET) /api/employees/{id}/`
+- Update a specific company or employee
+  - `(PUT) /api/companies/{id}/`
+  - `(PUT) /api/employees/{id}/`
+- Delete a specific company or employee
+  - `(DELETE) /api/companies/{id}/`
+  - `(DELETE) /api/employees/{id}/`
+- It is possible to search for a user by their username
+  - `(GET) /api/employees/?username=user1`
 
-👀 For more information about endpoints, see the documentation on endpoint `(GET)/api/doc/`
+- It is also possible to register a company without passing any employee on the payload and add later
+
+![image](/readme_img/create_company.png?raw=true "Create_company")
 
 ## 📎 Versioning
 
@@ -87,7 +78,7 @@ The API has ordering by delivery date and searching by username. To access this 
 
 ## 🧔 Authors
 
-* **Marco Capozzoli**: @marcocapozzoli (https://github.com/marcocapozzoli)
+* **Marco Capozzoli**: e-mail: marcocapozzoli90@gmail.com
 
 ## 📚 Referências
 - [Django Rest Framework](https://www.django-rest-framework.org/)
