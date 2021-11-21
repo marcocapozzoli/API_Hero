@@ -31,3 +31,13 @@ class DetailEmployeeAPIView(generics.RetrieveUpdateDestroyAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
+    
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.delete()
+        content = {'Message': 'Funcionário ' + f'"{instance}"' + ' excluído com sucesso.'}
+        return Response(
+            data=content,
+            status=status.HTTP_204_NO_CONTENT
+        )
+   
