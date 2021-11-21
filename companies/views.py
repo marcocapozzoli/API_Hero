@@ -16,6 +16,7 @@ class ListCompanyAPIView(generics.ListCreateAPIView):
 class DetailCompanyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Company.objects.all()
     serializer_class = ListCompanySerializer
+    http_method_names = ['get', 'put', 'delete', 'options']
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

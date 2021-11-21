@@ -3,10 +3,10 @@ from employees.models import Base, Employee
 
 
 class Company(Base):
-    company_name = models.CharField(max_length=64)
-    trade_name = models.CharField(max_length=64)
+    company_name = models.CharField(max_length=64, blank=False, unique=True)
+    trade_name = models.CharField(max_length=64, blank=False, unique=True)
     cnpj = models.CharField(max_length=18, unique=True)
-    address = models.CharField(max_length=255)
+    address = models.CharField(max_length=255, blank=False)
     employees = models.ManyToManyField(Employee)
     
     def __str__(self):

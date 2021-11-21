@@ -18,7 +18,8 @@ class ListEmployeeAPIView(generics.ListCreateAPIView):
 
 class DetailEmployeeAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Employee.objects.all()
-    serializer_class = ListEmployeeSerializer    
+    serializer_class = ListEmployeeSerializer
+    http_method_names = ['get', 'put', 'delete', 'options']   
     
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()

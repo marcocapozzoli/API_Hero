@@ -52,26 +52,14 @@ class CreateCompanySerializer(serializers.ModelSerializer):
             }
         }
     
-       
+    
     def validate(self, data):
-        
-        if Company.objects.filter(company_name=data['company_name']):
-            raise serializers.ValidationError({
-                "company_name": f"Uma empresa com razão social `{data['company_name']}` " + "já encontra-se cadastrada no banco de dados."
-            })
-        if Company.objects.filter(trade_name=data['trade_name']):
-            raise serializers.ValidationError({
-                "trade_name": f"Uma empresa com nome fantasia `{data['trade_name']}` " + "já encontra-se cadastrada no banco de dados."
-            })
         if not validate_cnpj(data.get('cnpj', '')):
             raise serializers.ValidationError(
                 {'cnpj': 'Um cnpj válido é obrigatório.'}
             )
-        if Company.objects.filter(cnpj=data['cnpj']):
-            raise serializers.ValidationError({
-                "cnpj": f"Uma empresa com cnpj `{data['cnpj']}` " + "já encontra-se cadastrada no banco de dados."
-            })
         return data
+    
     
     def create(self, validated_data):
          

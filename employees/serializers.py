@@ -54,10 +54,6 @@ class CreateEmployeeSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, data):
-        if User.objects.filter(username=data['username']):
-            raise serializers.ValidationError({
-                "username": f"{data['username']} " + "já cadastrado no banco de dados."
-            })
         if not validate_cpf(data.get('cpf', '')):
             raise serializers.ValidationError(
                 {'cpf': 'Um cpf válido é obrigatório.'}
