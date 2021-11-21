@@ -24,3 +24,10 @@ class DetailEmployeeAPIView(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = ListEmployeeSerializer(instance)
         return Response(serializer.data)
+    
+    def update(self, request, **kwargs):
+        instance = self.get_object()
+        serializer = CreateEmployeeSerializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)
